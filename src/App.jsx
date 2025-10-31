@@ -8,6 +8,7 @@ export default function LyricsPlayer() {
   const [currentLine, setCurrentLine] = useState(-1);
   const autoScrollRef = useRef(true);
   const scrollTimeoutRef = useRef(null);
+  const lyricsContainerRef = useRef(null);
 
   useEffect(() => {
     fetch("/Ordinary.srt")
@@ -27,7 +28,7 @@ export default function LyricsPlayer() {
           return {
             start: toSeconds(time[0].trim()),
             end: toSeconds(time[1].trim()),
-            text: lines.slice(2).join(" ").trim() || lines.slice(2).join(" "),
+            text: lines.slice(2).join(" ").trim(),
           };
         }
         return null;
@@ -43,6 +44,14 @@ export default function LyricsPlayer() {
     return parts[0] * 3600 + parts[1] * 60 + parts[2] + Number(ms) / 1000;
   };
 
+  const handleManualScroll = () => {
+    autoScrollRef.current = false;
+    clearTimeout(scrollTimeoutRef.current);
+    scrollTimeoutRef.current = setTimeout(() => {
+      autoScrollRef.current = true;
+    }, 3000);
+  };
+
   const handleTimeUpdate = () => {
     if (!audioRef.current) return;
     const current = audioRef.current.currentTime;
@@ -55,7 +64,9 @@ export default function LyricsPlayer() {
         }
       }
     }
+
     if (idx !== currentLine) setCurrentLine(idx);
+
     if (idx !== -1 && autoScrollRef.current) {
       const el = lineRefs.current[idx];
       if (el) {
@@ -80,7 +91,12 @@ export default function LyricsPlayer() {
           onTimeUpdate={handleTimeUpdate}
         />
       </div>
-      <div className="lp-lyrics">
+
+      <div
+        className="lp-lyrics"
+        ref={lyricsContainerRef}
+        onScroll={handleManualScroll}
+      >
         {lyrics.map((line, i) => (
           <div
             key={i}
