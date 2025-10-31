@@ -1,0 +1,81 @@
+:root {
+  --bg: #0b0b0b;
+  --card: #0f1720;
+  --text: #e6eef6;
+  --accent: #1dd3d8;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+.lp-root {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #040404 0%, #0b0b0b 100%);
+  font-family: Inter, Roboto, system-ui, -apple-system, "Segoe UI", Arial;
+  color: var(--text);
+  padding: 18px;
+  box-sizing: border-box;
+}
+
+.lp-player {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+audio {
+  width: min(720px, 100%);
+  outline: none;
+  border-radius: 8px;
+}
+
+.lp-lyrics {
+  flex: 1;
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 12px;
+  padding: 18px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  box-shadow: 0 6px 24px rgba(2, 6, 23, 0.6);
+}
+
+.lp-line {
+  padding: 10px 14px;
+  margin: 6px 0;
+  border-radius: 8px;
+  opacity: 0.8;
+  transition: opacity 160ms ease, transform 160ms ease, background 160ms ease;
+  cursor: pointer;
+  user-select: none;
+  color: var(--text);
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.lp-line:hover {
+  transform: translateY(-2px);
+  opacity: 0.95;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.lp-line.active {
+  opacity: 1;
+  background: linear-gradient(
+    90deg,
+    rgba(29, 211, 216, 0.06),
+    rgba(29, 211, 216, 0.02)
+  );
+  box-shadow: 0 4px 18px rgba(29, 211, 216, 0.06);
+  color: var(--accent);
+  font-weight: 600;
+  transform: scale(1.01);
+}
