@@ -11,7 +11,7 @@ export default function LyricsPlayer() {
   const lyricsContainerRef = useRef(null);
 
   useEffect(() => {
-    fetch("/Ordinary.srt")
+    fetch("./Ordinary.srt")
       .then((r) => r.text())
       .then((t) => parseSRT(t));
     return () => clearTimeout(scrollTimeoutRef.current);
@@ -86,7 +86,7 @@ export default function LyricsPlayer() {
       <div className="lp-player">
         <audio
           ref={audioRef}
-          src="/Ordinary.mp3"
+          src="./Ordinary.mp3"
           controls
           onTimeUpdate={handleTimeUpdate}
         />
